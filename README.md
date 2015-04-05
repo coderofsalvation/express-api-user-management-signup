@@ -3,6 +3,8 @@ express-api-user-management-signup
 
 Boilerplate for quickly building login systems on top of apis. This module adds a user backend with login / registration on top of that. Good startingpoint for DIY api management. Built in Node.js with the following features :
 
+<img src=".res/screenshot.jpg"/>
+
 # Install: standalone
 
     sudo npm install coffee-script -g
