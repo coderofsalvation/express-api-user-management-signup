@@ -79,9 +79,11 @@ exports.addNewAccount = (newData, callback) ->
         else
           saltAndHash newData.pass, (hash) ->
             newData.pass = hash
-            # append date stamp when record was created //
-            newData.date = moment().format('MMMM Do YYYY, h:mm:ss a')
-            accounts.insert newData, { safe: true }, callback
+            saltAndHash hash, (apikey) ->
+              newData.apikey = apikey.substr(0,24)
+              # append date stamp when record was created //
+              newData.date = moment().format('MMMM Do YYYY, h:mm:ss a')
+              accounts.insert newData, { safe: true }, callback
             event.emit 'addNewAccount', newData
             return
         return

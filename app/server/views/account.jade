@@ -26,6 +26,12 @@ input(type='hidden', value= user._id)#userId
 							option(selected=item.name == user.country)= item.name
 			hr
 			p#sub2.subheading
+			- if (user.apikey && user.apikey.length) {
+			#apikey-cg.control-group
+				label.control-label(for='apikey-tf') Apikey
+				.controls
+					input#apikey-tf.input-xlarge.disabled(type='text', name='apikey', value= user.apikey, disabled="disabled")
+			- }
 			#user-cg.control-group
 				label.control-label(for='user-tf') Username
 				.controls
