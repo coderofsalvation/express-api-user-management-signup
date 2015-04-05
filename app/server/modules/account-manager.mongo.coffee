@@ -38,7 +38,6 @@ exports.autoLogin = (user, pass, callback) ->
   return
 
 exports.manualLogin = (user, pass, callback) ->
-  console.log user+"|"+pass
   accounts.findOne { user: user }, (e, o) ->
     if o == null
       callback 'user-not-found'

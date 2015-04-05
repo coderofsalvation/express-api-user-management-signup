@@ -24,8 +24,6 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         return
     return
   app.post '/', (req, res) ->
-    console.log "ja post! "
-    console.dir req.params
     AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
       if !o
         res.send e, 400
