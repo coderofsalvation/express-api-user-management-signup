@@ -1,7 +1,7 @@
 {
-  "name": "express-api-proxy-user-signup-frontend",
+  "name": "express-api-user-management-signup",
   "version": "0.0.1",
-  "description": "Boilerplate Api proxy with login / signup frontend, port- and domain- routing, ratelimiting. BoGood startingpoint for DIY api management. Based on Stephen Braitsch node-login repo.",
+  "description": "adds user frontend with login / registration features to your (express) application. Startingpoint for DIY api management"
   "author": {
     "name": "Coder of Salvation"
   },
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/coderofsalvation/bullmq-login-api-management.git"
+    "url": "https://github.com/coderofsalvation/express-api-user-management-signup"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +18,6 @@
     "stylus": "0.31.0",
     "jade": "0.27.7",
     "moment": "1.7.2",
-    "bullmq": "0.0.1",
     "emailjs": "0.3.3",
     "request": "",
     "coffee-script": "^1.9.1"
