@@ -31,7 +31,10 @@ input(type='hidden', value= user._id)#userId
 				label.control-label(for='apikey-tf') Apikey
 				.controls
 					input#apikey-tf.input-xlarge.disabled(type='text', name='apikey', value= user.apikey, disabled="disabled")
+					input#apikey_action(type='hidden', name='apikey_action', value="")
+					button(type='button')#account-form-regenerate-apikey.btn
 			- }
+			hr
 			#user-cg.control-group
 				label.control-label(for='user-tf') Username
 				.controls

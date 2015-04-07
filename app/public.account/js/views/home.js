@@ -36,14 +36,10 @@ $(document).ready(function(){
 	$('#account-form-btn1').html('Delete');
 	$('#account-form-btn1').addClass('btn-danger');
 	$('#account-form-btn2').html('Update');
+	$('#account-form-regenerate-apikey').addClass('btn-danger');
+	$('#account-form-regenerate-apikey').html('Regenerate');
 
 // setup the confirm window that displays when the user chooses to delete their account //
+  hc.initConfirm();
 
-	$('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
-	$('.modal-confirm .modal-header h3').text('Delete Account');
-	$('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
-	$('.modal-confirm .cancel').html('Cancel');
-	$('.modal-confirm .submit').html('Delete');
-	$('.modal-confirm .submit').addClass('btn-danger');
-
-})
+});

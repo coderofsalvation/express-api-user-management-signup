@@ -9,10 +9,25 @@ function HomeController()
 	$('#btn-logout').click(function(){ that.attemptLogout(); });
 
 // confirm account deletion //
-	$('#account-form-btn1').click(function(){$('.modal-confirm').modal('show')});
+	$('#account-form-btn1').click(function(){
+    that.initConfirm("delete");
+    $('.modal-confirm').modal('show')
+  });
 
-// handle account deletion //
-	$('.modal-confirm .submit').click(function(){ that.deleteAccount(); });
+// confirm account deletion //
+	$('#account-form-regenerate-apikey').click(function(){
+    that.initConfirm("apikey");
+    $('.modal-confirm').modal('show')
+  });
+
+	this.regenerateApiKey = function(){
+		$('.modal-confirm').modal('hide');
+		var that = this;
+    $.post( "/update/apikey", {}, function( data ) {
+      $( "input#apikey-tf" ).html( data.msg );
+      $("input#apikey-tf").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100);
+    }, "json" );
+  }
 
 	this.deleteAccount = function()
 	{
@@ -54,7 +69,37 @@ function HomeController()
 		$('.modal-alert').modal('show');
 		$('.modal-alert button').click(function(){window.location.href = '/';})
 		setTimeout(function(){window.location.href = '/';}, 3000);
-	}
+  }
+
+  this.initConfirm = function(type){
+    $('.modal-confirm').modal({ show : false, keyboard : true, backdrop : true });
+    if( !type ) type = "delete";
+    $('.modal-confirm .submit').unbind('click');
+    var that = this;
+    switch( type ){
+      case "delete":
+        $('.modal-confirm .modal-header h3').text('Delete Account');
+        $('.modal-confirm .modal-body p').html('Are you sure you want to delete your account?');
+        $('.modal-confirm .cancel').html('Cancel');
+        $('.modal-confirm .submit').html('Delete');
+        $('.modal-confirm .submit').addClass('btn-danger');
+        $('.modal-confirm .submit').click(function(){ 
+          that.deleteAccount(); 
+        });
+        break;
+      case "apikey":
+        $('.modal-confirm .modal-header h3').text('Regenerate apikey');
+        $('.modal-confirm .modal-body p').html('This would require updating your clients<br>Are you sure?');
+        $('.modal-confirm .cancel').html('No');
+        $('.modal-confirm .submit').html('Yes!');
+        $('.modal-confirm .submit').addClass('btn-danger');
+        $('.modal-confirm .submit').click(function(){ 
+          that.regenerateApiKey(); 
+        });
+        break;
+    }
+  }
+
 }
 
 HomeController.prototype.onUpdateSuccess = function()

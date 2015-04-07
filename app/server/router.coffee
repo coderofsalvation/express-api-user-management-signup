@@ -8,6 +8,10 @@ module.exports = (app,dbHost,dbPort,dbName) ->
   AM = @AM = require('./modules/account-manager.mongo') 
   AM.init dbHost, dbPort, dbName
 
+  updateCookieAge = (o,res) ->
+    res.cookie 'user', o.user, maxAge: 900000
+    res.cookie 'pass', o.pass, maxAge: 900000
+
   # main login page //
   app.get '/', (req, res) ->
     # check if the user's credentials are saved in a cookie //
@@ -23,6 +27,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
           res.render 'login.jade', title: 'Hello - Please Login To Your Account'
         return
     return
+
   app.post '/', (req, res) ->
     AM.manualLogin req.param('user'), req.param('pass'), (e, o) ->
       if !o
@@ -30,11 +35,42 @@ module.exports = (app,dbHost,dbPort,dbName) ->
       else
         req.session.user = o
         if req.param('remember-me') == 'true'
-          res.cookie 'user', o.user, maxAge: 900000
-          res.cookie 'pass', o.pass, maxAge: 900000
+          updateCookieAge o, res
         res.send o, 200
       return
     return
+
+  # update field 
+  app.post '/update/apikey', (req, res) ->
+    # check if the user's credentials are saved in a cookie //
+    data = {}
+    response = {msg:"could not update apikey"}
+    if req.cookies.user == undefined or req.cookies.pass == undefined
+      response.msg = "session expired, please re-login"
+      return res.send JSON.stringify(response), 200
+    else
+      # attempt automatic login //
+      AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
+        if o == null
+          response.msg = "could not load user, please re-login"
+          res.send JSON.stringify(response), 200
+        else
+          req.session.user = o
+          if req.cookies.user != undefined and req.cookies.pass != undefined
+            updateCookieAge o, res
+          d = new Date()
+          AM.generateApiKey d.getMilliseconds()+d, (apikey) ->
+            AM.updateApiKey o.user, apikey, (e, o) ->
+              if e
+                response.msg = "could not regenerate apikey for user "+o.user +", please try again later"
+              else
+                response.msg = "your new apikey is "+data.apikey
+                response.apikey = data.apikey
+                # update the user's login cookies if they exists //
+              res.send JSON.stringify(response), 200
+            return
+        return
+
   # logged-in user homepage //
   app.get '/home', (req, res) ->
     if req.session.user == null
@@ -46,23 +82,24 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         countries: CT
         udata: req.session.user
     return
+
   app.post '/home', (req, res) ->
     if req.param('user') != undefined
-      AM.updateAccount {
+      data = {
         user: req.param('user')
         name: req.param('name')
         email: req.param('email')
         country: req.param('country')
         pass: req.param('pass')
-      }, (e, o) ->
+      }
+      AM.updateAccount data, (e, o) ->
         if e
           res.send 'error-updating-account', 400
         else
           req.session.user = o
           # update the user's login cookies if they exists //
           if req.cookies.user != undefined and req.cookies.pass != undefined
-            res.cookie 'user', o.user, maxAge: 900000
-            res.cookie 'pass', o.pass, maxAge: 900000
+            updateCookieAge o, res
           res.send 'ok', 200
         return
     else if req.param('logout') == 'true'
@@ -72,12 +109,14 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         res.send 'ok', 200
         return
     return
+
   # creating new accounts //
   app.get '/signup', (req, res) ->
     res.render 'signup.jade',
       title: 'Signup'
       countries: CT
     return
+
   app.post '/signup', (req, res) ->
     AM.addNewAccount {
       name: req.param('name')
@@ -92,6 +131,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         res.send 'ok', 200
       return
     return
+
   # password reset //
   app.post '/lost-password', (req, res) ->
     # look up the user's account via their email //
@@ -112,6 +152,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         res.send 'email-not-found', 400
       return
     return
+
   app.get '/reset-password', (req, res) ->
     email = req.query['e']
     passH = req.query['p']
@@ -126,6 +167,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         res.render 'reset.jade', title: 'Reset Password'
       return
     return
+
   app.post '/reset-password', (req, res) ->
     nPass = req.param('pass')
     # retrieve the user's email from the session to lookup their account and reset password //
@@ -139,6 +181,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         res.send 'unable to update password', 400
       return
     return
+
   # view & delete accounts //
   app.get '/print', (req, res) ->
     AM.getAllRecords (e, accounts) ->
@@ -147,6 +190,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         accts: accounts
       return
     return
+
   app.post '/delete', (req, res) ->
     AM.deleteAccount req.body.id, (e, obj) ->
       if !e
@@ -159,12 +203,15 @@ module.exports = (app,dbHost,dbPort,dbName) ->
         res.send 'record not found', 400
       return
     return
+
   app.get '/reset', (req, res) ->
     AM.delAllRecords ->
       res.redirect '/print'
       return
     return
+
   #app.get('*', function(req, res) { res.render('404.jade', { title: 'Page Not Found'}); });
   this
+
 # ---
 # generated by js2coffee 2.0.3
