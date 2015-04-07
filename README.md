@@ -46,7 +46,8 @@ Using the code below, it will add extra routes to your existing express app:
 * Session Tracking for Logged-In Users
 * Local Cookie Storage for Returning Users
 * Blowfish-based Scheme Password Encryption
-* extra REST webhooks for flexibilitystorage
+* extra REST webhooks for flexibilitystorage (to integrate with api proxy like apiaxle e.g.)
+* apikey support + regeneration of apikey
 * works standalone and as express drop-in lib (the latter needs improvement eg. app.use)
 
 ***
