@@ -1,6 +1,6 @@
 {
   "name": "express-api-user-management-signup",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "adds user frontend with login / registration features to your (express) application. Startingpoint for DIY api management",
   "author": {
     "name": "Coder of Salvation"
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/coderofsalvation/express-api-user-management-signup"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "express": "3.0.6",
     "stylus": "0.31.0",
