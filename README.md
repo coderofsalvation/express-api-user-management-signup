@@ -7,6 +7,8 @@ Boilerplate for quickly building login systems on top of apis. This module adds 
 <br><br>
 <img src=".res/loggedin.png">
 
+# WARNING: BETA, not production ready
+
 # Install: standalone
 
     sudo npm install coffee-script -g
