@@ -32,7 +32,7 @@ Using the code below, it will add extra routes to your existing express app:
     var requestdata = { headers: { "x-some-token":"l1kj2k323"} } /* optional: custom webhook requests */
     var mongocfg    = { dbName: "localhost", dbPort: 27017, dbName: "foo"}
     require("coffee-script/register")
-    require('express-api-proxy-user-signup-frontend/lib')(app,express,webhookurl,requestdata,mongocfg)
+    require('express-api-user-management-signup/lib')(app,express,webhookurl,requestdata,mongocfg)
     ...
 
     app.listen(....)
