@@ -1,15 +1,17 @@
 express-api-user-management-signup
 ==================================
 
-Boilerplate for quickly building login systems on top of apis. This module adds a user backend with login / registration on top of that. Good startingpoint for DIY api management. Built in Node.js with the following features :
+Boilerplate for quickly building login systems on top of apis. This module adds a user facade-backend with login / registration on top of that. Good startingpoint for DIY api management, processable thru webhooks.
 
-<img src=".res/screenshot.jpg"/>
+<img src=".res/login.png">
+<br><br>
+<img src=".res/loggedin.png">
 
 # Install: standalone
 
     sudo npm install coffee-script -g
     npm install express-api-user-management-signup
-    coffee app.coffee
+    WEBHOOKURL="http://localhost:8123" coffee app.coffee
     # NON-COFFEESCRIPTERS: coffee -c app.coffee will convert it to app.js 
 
 # Install: as library 
@@ -27,13 +29,30 @@ Using the code below, it will add extra routes to your existing express app:
     var host = process.env.HOST || "127.0.0.1"
     var app = express();
 
-    ...
-    var webhookurl  = "http://" + host + ":" + port              /* webhooks endpoint                 */
-    var requestdata = { headers: { "x-some-token":"l1kj2k323"} } /* optional: custom webhook requests */
-    var mongocfg    = { dbName: "localhost", dbPort: 27017, dbName: "foo"}
+    //>>>>>>>>>>>>  BEGIN OF CODE
+    
+    var config = {
+      webhook: {
+        url:  "http://" + host + ":" + port,
+        requestdata: { headers: { "x-some-token":"l1kj2k323"} }
+      }
+      mongo:       { dbName: "localhost", dbPort: 27017, dbName: "foo"}
+      layout:      {
+        title:       {
+          brand:     "Projectname",
+          welcome:   "Please login to your account"
+        },
+        menu:        {
+          "Apidoc":  {target:"_blank",url:"/api/v1/doc"},
+          "---":     "---",
+          "Contact": {target:"_blank",url:"mailto:support@foo.com"}
+        }
+      }
+    }
     require("coffee-script/register")
     require('express-api-user-management-signup/lib')(app,express,webhookurl,requestdata,mongocfg)
-    ...
+
+    //<<<<<<<<<<<<  END OF CODE
 
     app.listen(....)
 
@@ -46,9 +65,29 @@ Using the code below, it will add extra routes to your existing express app:
 * Session Tracking for Logged-In Users
 * Local Cookie Storage for Returning Users
 * Blowfish-based Scheme Password Encryption
-* extra REST webhooks for flexibilitystorage (to integrate with api proxy like apiaxle e.g.)
+* extra webhooks for flexibilitystorage (to integrate with api proxy like apiaxle e.g.)
 * apikey support + regeneration of apikey
 * works standalone and as express drop-in lib (the latter needs improvement eg. app.use)
+
+#### Webhooks
+
+The following webhooks are fired whenever 
+
+* configuredhost + /add 
+    when user adds account
+* configuredhost + /update 
+    when user updates account
+* configuredhost + /update/pass 
+    when user changes password
+* configuredhost + /update/apikey
+    when user regenerates apikey
+* configuredhost + /login
+    when user logs in
+* configuredhost + /reset/pass
+    when user resets password
+
+These webhooks can be reacted upon by other middle/software in order to 
+ send emails or update api proxy settings e.g.
 
 ***
 

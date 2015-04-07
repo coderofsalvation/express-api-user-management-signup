@@ -42,4 +42,6 @@ $(document).ready(function(){
 // setup the confirm window that displays when the user chooses to delete their account //
   hc.initConfirm();
 
+  $('a.dropdown-toggle').dropdown();
+
 });

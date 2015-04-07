@@ -123,7 +123,7 @@ exports.updateApiKey = (user, newApiKey, callback) ->
     else
       o.apikey = newApiKey 
       accounts.save o, { safe: true }, callback
-      event.emit 'updatePassword', o
+      event.emit 'updateApikey', o
       callback e, o
     return
   return

@@ -24,8 +24,10 @@ function HomeController()
 		$('.modal-confirm').modal('hide');
 		var that = this;
     $.post( "/update/apikey", {}, function( data ) {
-      $( "input#apikey-tf" ).html( data.msg );
-      $("input#apikey-tf").fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100);
+      if( data.apikey ){
+        $( "input#apikey-tf" ).attr( 'value', data.apikey );
+        $("input#apikey-tf").fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000)
+      }
     }, "json" );
   }
 

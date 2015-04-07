@@ -34,6 +34,9 @@ module.exports = (app,router,requestdata) ->
   router.AM.event.on 'updatePassword', (data) ->
     callWebhook "post", "/update/pass", data
   
+  router.AM.event.on 'updateApikey', (data) ->
+    callWebhook "post", "/update/apikey", data
+  
   router.AM.event.on 'login', (data) ->
     callWebhook "post", "/login", data
 

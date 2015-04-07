@@ -1,12 +1,13 @@
 
 console.log "registered user signup routings"
 
-module.exports = (app,dbHost,dbPort,dbName) ->
+module.exports = (app,layout,dbHost,dbPort,dbName) ->
   CT = @CT = require('./modules/country-list')
   AM = @AM = {}
   EM = @EM = require('./modules/email-dispatcher')
   AM = @AM = require('./modules/account-manager.mongo') 
   AM.init dbHost, dbPort, dbName
+  @layout = layout
 
   updateCookieAge = (o,res) ->
     res.cookie 'user', o.user, maxAge: 900000
@@ -16,7 +17,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
   app.get '/', (req, res) ->
     # check if the user's credentials are saved in a cookie //
     if req.cookies.user == undefined or req.cookies.pass == undefined
-      res.render 'login.jade', title: 'Hello - Please Login To Your Account'
+      res.render 'login.jade', title: layout.title.welcome 
     else
       # attempt automatic login //
       AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
@@ -24,7 +25,7 @@ module.exports = (app,dbHost,dbPort,dbName) ->
           req.session.user = o
           res.redirect '/home'
         else
-          res.render 'login.jade', title: 'Hello - Please Login To Your Account'
+          res.render 'login.jade', title: layout.title.welcome 
         return
     return
 
@@ -47,13 +48,13 @@ module.exports = (app,dbHost,dbPort,dbName) ->
     response = {msg:"could not update apikey"}
     if req.cookies.user == undefined or req.cookies.pass == undefined
       response.msg = "session expired, please re-login"
-      return res.send JSON.stringify(response), 200
+      res.end JSON.stringify(response)
     else
       # attempt automatic login //
       AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
         if o == null
           response.msg = "could not load user, please re-login"
-          res.send JSON.stringify(response), 200
+          res.end JSON.stringify(response)
         else
           req.session.user = o
           if req.cookies.user != undefined and req.cookies.pass != undefined
@@ -64,10 +65,10 @@ module.exports = (app,dbHost,dbPort,dbName) ->
               if e
                 response.msg = "could not regenerate apikey for user "+o.user +", please try again later"
               else
-                response.msg = "your new apikey is "+data.apikey
-                response.apikey = data.apikey
+                response.msg = "your new apikey is "+apikey
+                response.apikey = apikey
                 # update the user's login cookies if they exists //
-              res.send JSON.stringify(response), 200
+              res.end JSON.stringify(response)
             return
         return
 
@@ -78,7 +79,8 @@ module.exports = (app,dbHost,dbPort,dbName) ->
       res.redirect '/'
     else
       res.render 'home.jade',
-        title: 'Control Panel'
+        menu: layout.menu
+        brand: layout.title.brand
         countries: CT
         udata: req.session.user
     return
