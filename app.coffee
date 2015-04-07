@@ -34,7 +34,7 @@ router = require('./app/server/router') app, {
     "Foo": "http://www.google.com"
     "---": "---"
     "Bar": "mailto:foo@gmail.com"
-}
+}, {}
 require('./app/server/webhook') app, router
 http.createServer(app).listen app.get('port'), ->
   console.log 'Express server listening on port ' + app.get('port')

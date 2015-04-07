@@ -1,27 +1,31 @@
 crypto = require('crypto')
-MongoDB = require('mongodb').Db
-Server = require('mongodb').Server
+mongo = require('mongodb')
+MongoClient = mongo.MongoClient
 moment = require('moment')
 EventEmitter = require('events').EventEmitter
 event = exports.event = new EventEmitter
 
 ### establish the database connection ###
 
-db = {} 
+db = {}
 accounts = {}
 
-exports.init = (dbHost,dbPort,dbName) ->
-  dbPort = 27017 if !dbPort
-  dbHost = 'localhost' if !dbHost
-  dbName = 'node-login' if !dbName
-  db = new MongoDB( dbName, new Server(dbHost, dbPort, auto_reconnect: true), w: 1)
-  db.open (e, d) ->
-    if e
-      console.log e
+exports.init = (cfg) ->
+  dbPort = (cfg.port || 27017)
+  dbHost = (cfg.host || 'localhost')
+  dbName = (cfg.name || 'express-api-user-management-signup' )
+  url = "mongodb://";
+  url += cfg.username+":"+cfg.password+"@" if cfg.username && cfg.password
+  url += dbHost+":"+dbPort+"/"+dbName
+
+  MongoClient.connect url, (err,dbhandle) ->
+    db = dbhandle
+    status = 'connected to database'
+    if !err
+      accounts = db.collection('accounts')
     else
-      console.log 'connected to database :: ' + dbName
-    return
-  accounts = db.collection('accounts')
+      status = "not "+status+" "+url+" :("
+    console.log status
 
 ### login validation methods ###
 

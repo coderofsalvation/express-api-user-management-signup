@@ -38,7 +38,13 @@ Using the code below, it will add extra routes to your existing express app:
         url:  "http://" + host + ":" + port,
         requestdata: { headers: { "x-some-token":"l1kj2k323"} }
       }
-      mongo:       { dbName: "localhost", dbPort: 27017, dbName: "foo"}
+      mongo:       { 
+        host: "localhost", 
+        port: 27017, 
+        name: "foo"
+        // user: "foo"
+        // password: "23kj4"
+      }
       layout:      {
         title:       {
           brand:     "Projectname",

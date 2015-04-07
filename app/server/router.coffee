@@ -1,12 +1,12 @@
 
 console.log "registered user signup routings"
 
-module.exports = (app,layout,dbHost,dbPort,dbName) ->
+module.exports = (app,layout,mongocfg) ->
   CT = @CT = require('./modules/country-list')
   AM = @AM = {}
   EM = @EM = require('./modules/email-dispatcher')
-  AM = @AM = require('./modules/account-manager.mongo') 
-  AM.init dbHost, dbPort, dbName
+  AM = @AM = require('./modules/account-manager.mongo')
+  AM.init mongocfg
   @layout = layout
 
   updateCookieAge = (o,res) ->
