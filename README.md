@@ -26,7 +26,7 @@ Use it directly in your existing express servercode:
 
 In your existing express-app, just put this above app.listen(....) :
 
-    require("./usermanagement.js");
+    require("./usermanagement.js")(app,express);
 
 where usermanagement.js looks something like this:
 
