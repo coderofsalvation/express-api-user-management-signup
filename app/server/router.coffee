@@ -17,7 +17,7 @@ module.exports = (app,layout,mongocfg) ->
   app.get '/', (req, res) ->
     # check if the user's credentials are saved in a cookie //
     if req.cookies.user == undefined or req.cookies.pass == undefined
-      res.render 'login.jade', title: layout.title.welcome 
+      res.render 'login.jade', {title: layout.title.welcome, brand: layout.title.brand }
     else
       # attempt automatic login //
       AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
@@ -25,7 +25,7 @@ module.exports = (app,layout,mongocfg) ->
           req.session.user = o
           res.redirect '/home'
         else
-          res.render 'login.jade', title: layout.title.welcome 
+          res.render 'login.jade', { brand: layout.title.brand, title: layout.title.welcome }
         return
     return
 
@@ -115,6 +115,7 @@ module.exports = (app,layout,mongocfg) ->
   # creating new accounts //
   app.get '/signup', (req, res) ->
     res.render 'signup.jade',
+      brand: layout.title.brand
       title: 'Signup'
       countries: CT
     return
@@ -166,7 +167,7 @@ module.exports = (app,layout,mongocfg) ->
         req.session.reset =
           email: email
           passHash: passH
-        res.render 'reset.jade', title: 'Reset Password'
+        res.render 'reset.jade', { title: 'Reset Password', brand: layout.title.brand }
       return
     return
 
@@ -188,6 +189,7 @@ module.exports = (app,layout,mongocfg) ->
   app.get '/print', (req, res) ->
     AM.getAllRecords (e, accounts) ->
       res.render.jade 'print',
+        brand: layout.title.brand
         title: 'Account List'
         accts: accounts
       return

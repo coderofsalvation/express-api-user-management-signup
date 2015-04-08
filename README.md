@@ -24,15 +24,12 @@ Use it directly in your existing express servercode:
     npm install express-api-user-management-signup
     npm install jade mongodb stylus moment emailjs coffee-script
 
-Using the code below, it will add extra routes to your existing express app:
+In your existing express-app, just put this above app.listen(....) :
 
-    var express = require("express");
-    var port = process.env.PORT || 8111
-    var host = process.env.HOST || "127.0.0.1"
-    var app = express();
+    require("./usermanagement.js");
 
-    //>>>>>>>>>>>>  BEGIN OF CODE
-    
+where usermanagement.js looks something like this:
+
     var config = {
       webhook: {
         url:  "http://" + host + ":" + port,
@@ -57,12 +54,8 @@ Using the code below, it will add extra routes to your existing express app:
         }
       }
     }
-    require("coffee-script/register")
-    require('express-api-user-management-signup/lib')(app,express,webhookurl,requestdata,mongocfg)
-
-    //<<<<<<<<<<<<  END OF CODE
-
-    app.listen(....)
+    module.parent.require("coffee-script/register")
+    module.parent.require('express-api-user-management-signup/lib')(app,express,config)
 
 # Features:
 
