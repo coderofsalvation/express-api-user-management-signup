@@ -1,0 +1,70 @@
+.jsb label {
+	width:			85px;
+	display:		inline-block;
+	text-align:		right;
+  margin-right: 3.0em;
+	vertical-align:	top;
+}
+
+.jsb label :first-letter{
+  text-transform: uppercase; 
+}
+
+
+.jsb fieldset {
+  margin-top: 0.5em;
+}
+.jsb fieldset div fieldset {	
+  /* background-color: #DDD; */
+}
+
+.jsb input[type=text]{
+  width:270px;
+}
+.jsb select {
+  width: 280px;
+}
+
+div.row fieldset{
+  border:none
+}
+
+.del_button {
+  clear: both;
+  position: relative;
+  float:right;
+}
+
+div.row fieldset fieldset{
+  margin-left: 15.0em;
+	border:			1px solid #CCC;
+}
+
+div.row fieldset fieldset fieldset{
+  margin-left:1.0em;
+}
+
+.jsb textarea{
+  width:68%;
+  height:78px;
+}
+
+.jsb input {
+  text-indent: 0.3em;
+  width: 20em;
+}
+
+.jsb .object > span > fieldset {
+  margin-right: 1.0em;
+}
+
+.jsb,
+.jsb > fieldset {
+	border:			0px;
+	margin:			0px;
+}
+
+.jsb span.invalid {
+	border:			0px;
+}
+
