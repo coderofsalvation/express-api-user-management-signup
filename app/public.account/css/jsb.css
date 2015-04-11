@@ -49,9 +49,8 @@ div.row fieldset fieldset fieldset{
   height:78px;
 }
 
-.jsb input {
+.jsb input[ {
   text-indent: 0.3em;
-  width: 20em;
 }
 
 .jsb .object > span > fieldset {
