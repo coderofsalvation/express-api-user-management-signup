@@ -28,7 +28,7 @@ $(document).ready(function(){
 	$('#name-tf').focus();
 	$('#github-banner').css('top', '41px');
 
-// customize the account settings form //
+  // customize the account settings form //
 	
 	$('#account-form h1').text('Account Settings');
 	$('#account-form #sub1').text('Here are the current settings for your account.');
@@ -39,9 +39,60 @@ $(document).ready(function(){
 	$('#account-form-regenerate-apikey').addClass('btn-danger');
 	$('#account-form-regenerate-apikey').html('Regenerate');
 
-// setup the confirm window that displays when the user chooses to delete their account //
+  // setup the confirm window that displays when the user chooses to delete their account //
   hc.initConfirm();
-
+  // init dropdown
   $('a.dropdown-toggle').dropdown();
 
+  // generate form
+  var jsonForm = $('#metaform').jsonForm({
+    form: [{ 
+      "type": "fieldset",
+      "title": "Webhooks",
+      "expandable": true,
+      "items": [ "webhooks" ]
+    }],
+    schema: {
+      name: {
+        type: 'string',
+        title: 'Name',
+        required: true
+      },
+      age: {
+        type: 'number',
+        title: 'Age'
+      },
+      "webhooks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "event": {
+              "type": "string",
+              "enum": ["item new","item update","item delete"],
+              "title": "When",
+              "required": true
+            },
+            "url": {
+              "type": "string",
+              "title": "call url",
+              "default": "http://yourapp.com/foo",
+              "required": true
+            },
+            "method": {
+              "type": "string",
+              "enum": ["get","post","put","delete"],
+              "title": "using",
+              "required": true
+            },
+          }
+        }
+      }
+    }
+  });
+  // update the hidden input field with jsondata
+  $('#metaform').on('change keyup', function() {
+    var values = jsonForm.getFormValues();
+    $("#meta").attr('value', JSON.stringify( values ) );
+  });
 });

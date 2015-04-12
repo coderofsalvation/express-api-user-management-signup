@@ -136,3 +136,40 @@ label {
 button i {
   padding-left: 8px;
 }
+#metaform > div > fieldset > div > div > div,
+#metaform >	div > div.control-group.jsonform-error-friends > div.controls {
+  margin-left: 0;
+}
+#jsonform-0-elt-friends > ul {
+  margin-left: 0;
+}
+#account-form select {
+  width: auto;
+}
+#account-form .add-on {
+  border: none;
+  background-color: inherit;
+}
+.expandable > legend:before {
+  content: '\25B8';
+  padding-right: 5px;
+}
+.expanded > legend:before {
+  content: '\25BE';
+}
+._jsonform-array-buttons {
+  margin-left: 25px;
+}
+.jsonform-required > label:after {
+  content: ' *';
+  color: #f00;
+}
+form.jsonform-hasrequired:after {
+  content: '* Required field';
+  display: block;
+  color: #f00;
+  padding-top: 1em;
+}
+legend {
+  margin-bottom: 0;
+}

@@ -5,19 +5,19 @@ raiseText()
 	-webkit-text-shadow: -1px 1px 0 white
 
 body 
-	margin  0
-	padding  0
-	height  100%
+	margin	0
+	padding	0
+	height	100%
 	background rgb(254,254,254)
-	background -moz-radial-gradient(center, ellipse cover,  rgba(254,254,254,1) 0%, rgba(214,214,214,1) 100%) /* FF3.6+ */
+	background -moz-radial-gradient(center, ellipse cover,	rgba(254,254,254,1) 0%, rgba(214,214,214,1) 100%) /* FF3.6+ */
 	background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(254,254,254,1)), color-stop(100%,rgba(214,214,214,1))) /* Chrome,Safari4+ */
-	background -webkit-radial-gradient(center, ellipse cover,  rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* Chrome10+,Safari5.1+ */
-	background -o-radial-gradient(center, ellipse cover,  rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* Opera 12+ */
-	background -ms-radial-gradient(center, ellipse cover,  rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* IE10+ */
-	background radial-gradient(center, ellipse cover,  rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* W3C */
+	background -webkit-radial-gradient(center, ellipse cover,	rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* Chrome10+,Safari5.1+ */
+	background -o-radial-gradient(center, ellipse cover,	rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* Opera 12+ */
+	background -ms-radial-gradient(center, ellipse cover,	rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* IE10+ */
+	background radial-gradient(center, ellipse cover,	rgba(254,254,254,1) 0%,rgba(214,214,214,1) 100%) /* W3C */
 	
 // login form //
-    
+		
 #login-container{
 	width 340px
 	margin 160px auto	
@@ -66,7 +66,7 @@ body
 	form{
 		raiseText()
 		margin-bottom 0		
- 		button{
+		 button{
 			width 80px
 			top 213px
 			position absolute
@@ -92,9 +92,9 @@ body
 	width 310px
 	margin -200px 0 0 -150px
 }
-    
-// logged-in page //    
-    
+		
+// logged-in page //		
+		
 #btn-logout
 	width 100px
 	top 1px
@@ -107,7 +107,7 @@ body
 	padding 20px
 #four04
 	padding:20px	
-    
+		
 // general shared rules //
 .clear-fix
 	clear both
@@ -127,3 +127,42 @@ label
 	margin-top 3px
 button i
 	padding-left 8px	
+
+// jsonform //
+
+#metaform > div > fieldset > div > div > div
+#metaform >	div > div.control-group.jsonform-error-friends > div.controls
+	margin-left:0
+
+#jsonform-0-elt-friends > ul
+	margin-left:0
+
+#account-form select
+	width: auto
+
+#account-form .add-on
+	border: none
+	background-color: inherit
+
+.expandable > legend:before
+	content: '\25B8'
+	padding-right: 5px
+
+.expanded > legend:before 
+	content: '\25BE'
+
+._jsonform-array-buttons
+	margin-left: 25px
+
+.jsonform-required > label:after
+	content: ' *'
+	color: red
+
+form.jsonform-hasrequired:after
+	content: '* Required field'
+	display: block
+	color: red
+	padding-top: 1em
+
+legend
+	margin-bottom: 0
