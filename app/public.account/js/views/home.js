@@ -1,91 +1,59 @@
-function generateForm(){
-    var schema = {
-      "webhook":{
-        type: "object",
-        properties: {
-          "event": {
-            "title": "when",
-            "type":     "string",
-            "enum": ["notify_new_item","item_deleted","item_updated"],
-            "required":   true
-          },
-          "url": {
-            "type":     "string",
-            "title": "Call url",
-            "placeholder": "http://yourapi.com/foo",
-            "required":   true
-          },
-          "method": {
-            "type":     "string",
-            "enum": ["get","post","put","delete"],
-            "title": "Using method",
-            "required":   true
-          }
-        }
+var schema = {
+  "webhook":{
+    type: "object",
+    properties: {
+      "event": {
+        "title": "when",
+        "type":     "string",
+        "enum": ["notify_new_item","item_deleted","item_updated"],
+        "invalid": "Type of webhook is left blank",
+        "required":   true
       },
-      "form": {
-        "properties": {
-          "webhook": {
-            "title": "Webhook",
-            "type":     [ "string", "array" ],
-            "items": {
-              "$ref":   "webhook"
-            }
-          }
+      "url": {
+        "type":     "string",
+        "title": "Call url",
+        "placeholder": "http://yourapi.com/foo",
+        "invalid": "Url of webhook is left blank",
+        "required":   true
+      },
+      "method": {
+        "type":     "string",
+        "enum": ["get","post","put","delete"],
+        "title": "Using method",
+        "invalid": "Method of webhook is left blank",
+        "required":   true
+      }
+    }
+  },
+  "form": {
+    "properties": {
+      "webhook": {
+        "title": "Webhook",
+        "type":     [ "string", "array" ],
+        "items": {
+          "$ref":   "webhook"
         }
       }
-    };
-
-    var data = {
-      "name":       [ "foo", "bar" ],
-      "private":      true,
-      "age":        77,
-
-      "detail": {
-        "description":  "An example object",
-        "type":     "free"
-      }
-    };
-
-    var f = document.getElementById('meta');
-    //var jsb = new JSB(f, data);
-    var jsb = new JSB(f, false);
-
-    jsb.setSchema(schema["form"], function(name) {
-      console.log("Load ref:", name);
-
-      return(schema[name]);
-    });
-
-    jsb.render( {append: true } );
-
-    document.getElementById('save').addEventListener('click', function(e) {
-      console.log(JSON.stringify(jsb, null, "   "));
-    });
-
-    document.getElementById('validate').addEventListener('click', function(e) {
-      if (jsb.validate()) {
-        alert('Yup, all good');
-      } else {
-        alert('Sorry, not valid');
-      }
-    });
-}
-
-
+    }
+  }
+};
 
 $(document).ready(function(){
 
-	var hc = new HomeController();
-	var av = new AccountValidator();
+	var hc  = new HomeController();
+	var av  = new AccountValidator();
+  var jsb = false;
 	
 	$('#account-form').ajaxForm({
 		beforeSubmit : function(formData, jqForm, options){
-			if (av.validateForm() == false){
+			if ( av.validateForm() == false){
 				return false;
 			} 	else{
-			// push the disabled username field onto the form data array //
-				formData.push({name:'user', value:$('#user-tf').val()})
+        // create jsondata from generated form 
+        formData.push( {name:'meta', value: JSON.stringify(jsb,null, "   ")  } );
+        // push the disabled username field onto the form data array //
+				formData.push({name:'user', value:$('#user-tf').val()});
+        console.dir(formData);
 				return true;
 			}
 		},
@@ -120,6 +88,15 @@ $(document).ready(function(){
   // activate dropdown 
   $('a.dropdown-toggle').dropdown();
 
-  generateForm();
-
+  // generate form
+  var f = document.getElementById('metaform');
+  var data = {};
+  jsb = new JSB(f, data);
+  jsb.setSchema(schema["form"], function(name) {
+    console.log("Load ref:", name);
+    return(schema[name]);
+  });
+  jsb.render({ append:true });
+  window.jsb = jsb; // make accessible for accountValidator.js *TODO* any other way to do this?
+  //console.log(JSON.stringify(jsb, null, "   "));
 });

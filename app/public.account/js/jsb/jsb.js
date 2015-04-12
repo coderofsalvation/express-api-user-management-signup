@@ -168,6 +168,7 @@ JSB.prototype.renderHTML = function(schema, name, data, options)
 	if (schema['enum'] && !schema.hidden) {
 		html += '<select name="' + id +'"';
 		if (schema.advanced ) html += ' class="advanced"';
+    if( schema.invalid ) html += ' data-invalid="'+htmlEncode(schema.invalid)+'" ';
     html += '>\n';
 
 		if (!schema.required) {
@@ -206,6 +207,7 @@ JSB.prototype.renderHTML = function(schema, name, data, options)
 					html += '<textarea name="' + id +
 								'" class="' + classname + '"';
 
+          if( schema.invalid     ) html += ' data-invalid="'+htmlEncode(schema.invalid)+'" ';
 					if (schema.readonly) {
 						html += ' readonly';
 					}
@@ -239,6 +241,7 @@ JSB.prototype.renderHTML = function(schema, name, data, options)
 				html += '<input name="' + id + '" type="' + inputtype +
 								'" class="' + classname + '"';
         if( schema.placeholder ) html += ' placeholder="'+schema.placeholder+'" ';
+        if( schema.invalid     ) html += ' data-invalid="'+htmlEncode(schema.invalid)+'" ';
 				if (type == 'boolean' && data ) {
           html += ' checked="checked"';
 				} else if (data) {
@@ -460,6 +463,7 @@ JSB.prototype.getValue = function(element)
 {
 	var value	= undefined;
 	var detail	= null;
+  console.dir(element);
 
 	switch (element.nodeName.toLowerCase()) {
 		case 'button':
@@ -472,7 +476,6 @@ JSB.prototype.getValue = function(element)
 		switch (detail.type) {
 			case 'object':
 				value = {};
-
 				for (var i = 0, n; n = element.childNodes[i]; i++) {
 					var v;
 					var d;
@@ -521,7 +524,6 @@ JSB.prototype.getValue = function(element)
 				return(value);
 		}
 	}
-
 	switch (element.nodeName.toLowerCase()) {
 		default:
 			/* Get the first child's value */
@@ -593,20 +595,8 @@ JSB.prototype.validate = function(el)
 			}
 
 			if ((detail = this.getDetail(el))) {
-				if (tv4) {
-					value = this.getValue(el);
-
-					/* Use tv4 if loaded */
-					if (value && !tv4.validate(value, detail.schema, false, true)) {
-						console.log(tv4.error);
-
-						this.addClass(el, 'invalid');
-						el.setAttribute('title', tv4.error.message);
-						valid = false;
-					}
-				} else if (detail.schema.required) {
+				if (detail.schema.required) {
 					/* Very simple built in validation */
-
 					if (!el.value || el.value.length == 0) {
 						this.addClass(el, 'invalid');
 						valid = false;

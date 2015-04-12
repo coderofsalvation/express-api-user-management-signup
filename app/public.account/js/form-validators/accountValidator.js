@@ -31,6 +31,7 @@ function AccountValidator(){
 		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(e);
 	}
+
 	
 	this.showErrors = function(a)
 	{
@@ -72,6 +73,12 @@ AccountValidator.prototype.validateForm = function()
 	if (this.validatePassword(this.formFields[3].val()) == false) {
 		this.controlGroups[3].addClass('error');
 		e.push('Password Should Be At Least 6 Characters');
+	}
+	if ( !window.jsb.validate() ) {
+    $(".invalid").each( function(index){
+      if( $(this).attr('data-invalid') ) e.push( $(this).attr('data-invalid') );
+      $(this).addClass( 'error' );
+    });
 	}
 	if (e.length) this.showErrors(e);
 	return e.length === 0;
