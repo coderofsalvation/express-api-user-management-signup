@@ -6,6 +6,8 @@ Boilerplate for quickly building login systems on top of apis. This module adds 
 <img src=".res/login.png">
 <br><br>
 <img src=".res/loggedin.png">
+<br><br>
+<img src=".res/webhooks.png">
 
 # WARNING: BETA, not production ready
 
