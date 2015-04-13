@@ -110,6 +110,8 @@ These webhooks can be reacted upon by other middle/software in order to
 
 ## Todo
 
+* tests
+* responsive ui (for smartphone etc)
 * url validation for webhook url in jsonschema
 * smaller fonts jsonform validation error tooltips (to match the layout)
 
