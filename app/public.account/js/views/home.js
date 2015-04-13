@@ -45,54 +45,13 @@ $(document).ready(function(){
   $('a.dropdown-toggle').dropdown();
 
   // generate form
-  var jsonForm = $('#metaform').jsonForm({
-    form: [{ 
-      "type": "fieldset",
-      "title": "Webhooks",
-      "expandable": true,
-      "items": [ "webhooks" ]
-    }],
-    schema: {
-      name: {
-        type: 'string',
-        title: 'Name',
-        required: true
-      },
-      age: {
-        type: 'number',
-        title: 'Age'
-      },
-      "webhooks": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "event": {
-              "type": "string",
-              "enum": ["item new","item update","item delete"],
-              "title": "When",
-              "required": true
-            },
-            "url": {
-              "type": "string",
-              "title": "call url",
-              "default": "http://yourapp.com/foo",
-              "required": true
-            },
-            "method": {
-              "type": "string",
-              "enum": ["get","post","put","delete"],
-              "title": "using",
-              "required": true
-            },
-          }
-        }
-      }
-    }
-  });
-  // update the hidden input field with jsondata
-  $('#metaform').on('change keyup', function() {
-    var values = jsonForm.getFormValues();
-    $("#meta").attr('value', JSON.stringify( values ) );
+  $.getJSON( $("#metaformurl").attr('value'), {}, function(data){
+    data.value = JSON.parse( $("#meta").attr('value') );
+    console.dir(data);
+    var jsonForm = $("#metaform").jsonForm( data );
+    // update the hidden input field with jsondata
+    $('#metaform').on('change keyup', function() {
+      $("#meta").attr('value', JSON.stringify( jsonForm.getFormValues() ) );
+    });
   });
 });

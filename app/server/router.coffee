@@ -41,7 +41,7 @@ module.exports = (app,layout,mongocfg) ->
       return
     return
 
-  # update field 
+  # update apikey 
   app.post '/update/apikey', (req, res) ->
     # check if the user's credentials are saved in a cookie //
     data = {}
@@ -79,6 +79,7 @@ module.exports = (app,layout,mongocfg) ->
       res.redirect '/'
     else
       res.render 'home.jade',
+        metaformurl: layout.formurl
         menu: layout.menu
         brand: layout.title.brand
         countries: CT
@@ -94,6 +95,8 @@ module.exports = (app,layout,mongocfg) ->
         country: req.param('country')
         pass: req.param('pass')
       }
+      data.meta = JSON.parse( req.param('meta') ) if req.param('meta')
+      console.dir data
       AM.updateAccount data, (e, o) ->
         if e
           res.send 'error-updating-account', 400
@@ -127,6 +130,7 @@ module.exports = (app,layout,mongocfg) ->
       user: req.param('user')
       pass: req.param('pass')
       country: req.param('country')
+      meta: {}
     }, (e) ->
       if e
         res.send e, 400

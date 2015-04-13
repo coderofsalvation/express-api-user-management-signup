@@ -87,6 +87,8 @@ exports.addNewAccount = (newData, callback) ->
               newData.apikey = apikey 
               # append date stamp when record was created //
               newData.date = moment().format('MMMM Do YYYY, h:mm:ss a')
+              newData.inactive = false 
+              newData.log = [ newData.date+" added account: "+JSON.stringify(newData) ]
               accounts.insert newData, { safe: true }, callback
             event.emit 'addNewAccount', newData
             return
@@ -99,7 +101,9 @@ exports.updateAccount = (newData, callback) ->
     o.name = newData.name
     o.email = newData.email
     o.country = newData.country
+    o.meta = newData.meta if newData.meta
     if newData.pass == ''
+      o.log.push moment().format('MMMM Do YYYY, h:mm:ss a')+" updated account with: "+JSON.stringify(newData) 
       accounts.save o, { safe: true }, (err) ->
         if err
           callback err
@@ -109,7 +113,8 @@ exports.updateAccount = (newData, callback) ->
     else
       saltAndHash newData.pass, (hash) ->
         o.pass = hash
-        accounts.save o, { safe: true }, (err) ->
+        o.log.push moment().format('MMMM Do YYYY, h:mm:ss a')+" updated account + password"+JSON.stringify(newData) 
+        accounts.save o, { safe: true}, (err) ->
           if err
             callback err
           else
@@ -126,7 +131,9 @@ exports.updateApiKey = (user, newApiKey, callback) ->
       callback e, null
     else
       o.apikey = newApiKey 
-      accounts.save o, { safe: true }, callback
+      console.dir o
+      o.log.push moment().format('MMMM Do YYYY, h:mm:ss a')+" apikey updated to "+o.apikey
+      accounts.save o, { safe: true }, callback 
       event.emit 'updateApikey', o
       callback e, o
     return
@@ -147,7 +154,12 @@ exports.updatePassword = (email, newPass, callback) ->
 
 ### account lookup methods ###
 
+# don't delete because of 'oh I accidentally deleted our account'-requests
 exports.deleteAccount = (id, callback) ->
+  accounts.save { _id: getObjectId(id), inactive:true }, callback
+  return
+
+exports.purgeAccount = (id, callback) ->
   accounts.remove { _id: getObjectId(id) }, callback
   return
 

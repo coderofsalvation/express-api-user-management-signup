@@ -51,7 +51,8 @@ where usermanagement.js looks something like this:
           "Apidoc":  {target:"_blank",url:"/api/v1/doc"},
           "---":     "---",
           "Contact": {target:"_blank",url:"mailto:support@foo.com"}
-        }
+        },
+        formurl: "/js/form.json"
       }
     }
     module.parent.require("coffee-script/register")
@@ -66,9 +67,12 @@ where usermanagement.js looks something like this:
 * Session Tracking for Logged-In Users
 * Local Cookie Storage for Returning Users
 * Blowfish-based Scheme Password Encryption
-* extra webhooks for flexibilitystorage (to integrate with api proxy like apiaxle e.g.)
+* end-user webhooks
+* optional internal webhooks for flexibilitystorage (to integrate with api proxy like apiaxle or emailgateway e.g.)
+* logging of db actions
 * apikey support + regeneration of apikey
 * works standalone and as express drop-in lib (the latter needs improvement eg. app.use)
+* flexible form using (optionally remote) jsonschema
 
 #### Webhooks
 
@@ -87,12 +91,16 @@ The following webhooks are fired whenever
 * configuredhost + /reset/pass
     when user resets password
 
+Where configuredhost is defined by you ('http://mygateway.com/foo' e.g.)
 These webhooks can be reacted upon by other middle/software in order to 
  send emails or update api proxy settings e.g.
 
-***
+### Todo
 
-####Node-Login is built on top of the following libraries :
+* url validation for webhook url in jsonschema
+* smaller fonts jsonform validation error tooltips (to match the layout)
+
+### Built with
 
 * [Node.js](http://nodejs.org/) - Application Server
 * [Express.js](http://expressjs.com/) - Node.js Web Framework
@@ -102,7 +110,6 @@ These webhooks can be reacted upon by other middle/software in order to
 * [EmailJS](http://github.com/eleith/emailjs) - Node.js > SMTP Server Middleware
 * [Moment.js](http://momentjs.com/) - Lightweight Date Library
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) - UI Component & Layout Library
-
-####Credits
-
-* [braitsch](http://github.com/braitsch) for his node-login boilerplate
+* [jsonform](http://developer.joshfire.com/doc/dev/ref/jsonform)
+* [underscore](http://documentcloud.github.com/underscore)
+* [JSV](https://github.com/garycourt/JSV)

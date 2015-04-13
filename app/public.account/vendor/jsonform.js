@@ -845,7 +845,6 @@ jsonform.elementTypes = {
             .removeClass('disabled');
         }
       });
-
       //Simulate Users click to setup the form with its minItems
       var curItems = $('> ul > li', $nodeid).length;
       if ((boundaries.minItems > 0) &&
