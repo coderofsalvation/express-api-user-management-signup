@@ -37,14 +37,14 @@ where usermanagement.js looks something like this:
       webhook: {
         url:  "http://" + host + ":" + port,
         requestdata: { headers: { "x-some-token":"l1kj2k323"} }
-      }
+      },
       mongo:       { 
         host: "localhost", 
         port: 27017, 
         name: "foo"
-        // user: "foo"
+        // user: "foo",
         // password: "23kj4"
-      }
+      },
       layout:      {
         title:       {
           brand:     "Projectname",
