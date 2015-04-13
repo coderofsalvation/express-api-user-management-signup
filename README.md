@@ -9,16 +9,17 @@ Boilerplate for quickly building login systems on top of apis. This module adds 
 <br><br>
 <img src=".res/webhooks.png">
 
-# WARNING: BETA, not production ready
+## WARNING: BETA, not production ready
 
-# Install: standalone
+## Install: standalone
 
     sudo npm install coffee-script -g
     npm install express-api-user-management-signup
+    WEBHOOKURL="http://localhost:8123" node app.js 
+    # or 
     WEBHOOKURL="http://localhost:8123" coffee app.coffee
-    # NON-COFFEESCRIPTERS: coffee -c app.coffee will convert it to app.js 
 
-# Install: as library 
+## Install: as library 
 
 Use it directly in your existing express servercode:
 
@@ -60,7 +61,7 @@ where usermanagement.js looks something like this:
     module.parent.require("coffee-script/register")
     module.parent.require('express-api-user-management-signup/lib')(app,express,config)
 
-# Features:
+## Features:
 
 * coffeescript yay!
 * New User Account Creation
@@ -76,7 +77,7 @@ where usermanagement.js looks something like this:
 * works standalone and as express drop-in lib (the latter needs improvement eg. app.use)
 * flexible form using (optionally remote) jsonschema
 
-#### Webhooks
+## Webhooks
 
 The following webhooks are fired whenever 
 
@@ -97,12 +98,12 @@ Where configuredhost is defined by you ('http://mygateway.com/foo' e.g.)
 These webhooks can be reacted upon by other middle/software in order to 
  send emails or update api proxy settings e.g.
 
-### Todo
+## Todo
 
 * url validation for webhook url in jsonschema
 * smaller fonts jsonform validation error tooltips (to match the layout)
 
-### Built with
+## Built with
 
 * [Node.js](http://nodejs.org/) - Application Server
 * [Express.js](http://expressjs.com/) - Node.js Web Framework
