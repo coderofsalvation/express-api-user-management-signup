@@ -102,6 +102,7 @@ exports.updateAccount = (newData, callback) ->
     o.email = newData.email
     o.country = newData.country
     o.meta = newData.meta if newData.meta
+    o.log = [] if o.log is undefined # backwards compatible with older versions
     if newData.pass == ''
       o.log.push moment().format('MMMM Do YYYY, h:mm:ss a')+" updated account with: "+JSON.stringify(newData) 
       accounts.save o, { safe: true }, (err) ->

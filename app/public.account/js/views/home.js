@@ -46,7 +46,9 @@ $(document).ready(function(){
 
   // generate form
   $.getJSON( $("#metaformurl").attr('value'), {}, function(data){
-    data.value = JSON.parse( $("#meta").attr('value') );
+    values = $("#meta").attr('value');
+    if( !data ) data = {}
+    data.value = values.length ? JSON.parse( values ) : {}
     console.dir(data);
     var jsonForm = $("#metaform").jsonForm( data );
     // update the hidden input field with jsondata
