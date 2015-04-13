@@ -34,6 +34,7 @@ router = require('./app/server/router') app, {
     "Foo": "http://www.google.com"
     "---": "---"
     "Bar": "mailto:foo@gmail.com"
+  formurl: "/js/form.json"
 }, {}
 require('./app/server/webhook') app, router
 http.createServer(app).listen app.get('port'), ->
