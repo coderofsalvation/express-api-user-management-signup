@@ -77,6 +77,16 @@ where usermanagement.js looks something like this:
 * works standalone and as express drop-in lib (the latter needs improvement eg. app.use)
 * flexible form using (optionally remote) jsonschema
 
+## Extend forms easily
+
+By using [jsonform](https://github.com/joshfire/jsonform), we can easily extend the form without having to fiddle with database code.
+Just have a look at :
+
+* the '[form.json](https://github.com/coderofsalvation/express-api-user-management-signup/blob/master/app/public.account/js/form.json)' in this package
+* the [docs](http://github.com/joshfire/jsonform/wiki).
+
+> HINT: you can change the 'formurl'-parameter of 'app.[js,coffee]' (or the json above) into a remote url in order to remotely manage the form 
+
 ## Webhooks
 
 The following webhooks are fired whenever 
