@@ -13,7 +13,7 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-      if( ga != undefined ) ga('send', 'event', 'userdashboard','login', 'reset_password', 1);
+      if( typeof(ga) != 'undefined' ) ga('send', 'event', 'userdashboard','login', 'reset_password', 1);
 			rv.showSuccess("Your password has been reset.");
 			setTimeout(function(){ window.location.href = '/'; }, 3000);
 		},
