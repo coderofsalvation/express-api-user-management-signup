@@ -76,6 +76,7 @@ where usermanagement.js looks something like this:
 * apikey support + regeneration of apikey
 * works standalone and as express drop-in lib (the latter needs improvement eg. app.use)
 * flexible form using (optionally remote) jsonschema
+* optional google analytics by passing environment variable GOOGLE_ANALYTICS_TOKEN=LK-2342LK
 
 ## Extend forms easily
 

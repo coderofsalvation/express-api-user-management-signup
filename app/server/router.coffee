@@ -17,7 +17,11 @@ module.exports = (app,layout,mongocfg) ->
   app.get '/', (req, res) ->
     # check if the user's credentials are saved in a cookie //
     if req.cookies.user == undefined or req.cookies.pass == undefined
-      res.render 'login.jade', {title: layout.title.welcome, brand: layout.title.brand }
+      res.render 'login.jade', {
+        title: layout.title.welcome 
+        brand: layout.title.brand 
+        googleanalytics: process.env.GOOGLE_ANALYTICS_TOKEN
+      }
     else
       # attempt automatic login //
       AM.autoLogin req.cookies.user, req.cookies.pass, (o) ->
@@ -25,7 +29,11 @@ module.exports = (app,layout,mongocfg) ->
           req.session.user = o
           res.redirect '/home'
         else
-          res.render 'login.jade', { brand: layout.title.brand, title: layout.title.welcome }
+          res.render 'login.jade', { 
+            brand: layout.title.brand
+            title: layout.title.welcome 
+            googleanalytics: process.env.GOOGLE_ANALYTICS_TOKEN
+          }
         return
     return
 
@@ -84,6 +92,7 @@ module.exports = (app,layout,mongocfg) ->
         brand: layout.title.brand
         countries: CT
         udata: req.session.user
+        googleanalytics: process.env.GOOGLE_ANALYTICS_TOKEN
     return
 
   app.post '/home', (req, res) ->
@@ -122,6 +131,7 @@ module.exports = (app,layout,mongocfg) ->
       brand: layout.title.brand
       title: 'Signup'
       countries: CT
+      googleanalytics: process.env.GOOGLE_ANALYTICS_TOKEN
     return
 
   app.post '/signup', (req, res) ->
@@ -172,7 +182,10 @@ module.exports = (app,layout,mongocfg) ->
         req.session.reset =
           email: email
           passHash: passH
-        res.render 'reset.jade', { title: 'Reset Password', brand: layout.title.brand }
+        res.render 'reset.jade', { 
+          title: 'Reset Password', brand: layout.title.brand 
+          googleanalytics: process.env.GOOGLE_ANALYTICS_TOKEN
+        }
       return
     return
 
@@ -190,15 +203,18 @@ module.exports = (app,layout,mongocfg) ->
       return
     return
 
-  # view & delete accounts //
+  # view & delete accounts (disabled because of security) //
+  ###
   app.get '/print', (req, res) ->
     AM.getAllRecords (e, accounts) ->
       res.render.jade 'print',
         brand: layout.title.brand
         title: 'Account List'
         accts: accounts
+        googleanalytics: process.env.GOOGLE_ANALYTICS_TOKEN
       return
     return
+  ### 
 
   app.post '/delete', (req, res) ->
     AM.deleteAccount req.body.id, (e, obj) ->
