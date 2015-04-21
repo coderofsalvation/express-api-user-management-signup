@@ -56,6 +56,7 @@ function HomeController()
 			type: "POST",
 			data: {logout : true},
 			success: function(data){
+        if( ga != undefined ) ga('send', 'event', 'userdashboard', 'logout', 'succes', 1);
 	 			that.showLockedAlert('You are now logged out.<br>Redirecting you back to the homepage.');
 			},
 			error: function(jqXHR){
@@ -86,6 +87,7 @@ function HomeController()
         $('.modal-confirm .submit').html('Delete');
         $('.modal-confirm .submit').addClass('btn-danger');
         $('.modal-confirm .submit').click(function(){ 
+          if( ga != undefined ) ga('send', 'event', 'click', 'userdashboard', 'account_delete', 1);
           that.deleteAccount(); 
         });
         break;
@@ -96,6 +98,7 @@ function HomeController()
         $('.modal-confirm .submit').html('Yes!');
         $('.modal-confirm .submit').addClass('btn-danger');
         $('.modal-confirm .submit').click(function(){ 
+          if( ga != undefined ) ga('send', 'event', 'click', 'userdashboard', 'apikey_regenerate', 1);
           that.regenerateApiKey(); 
         });
         break;
@@ -111,4 +114,5 @@ HomeController.prototype.onUpdateSuccess = function()
 	$('.modal-alert .modal-body p').html('Your account has been updated.');
 	$('.modal-alert').modal('show');
 	$('.modal-alert button').off('click');
+  if( ga != undefined ) ga('send', 'event', 'click', 'userdashboard', 'account_update', 1);
 }

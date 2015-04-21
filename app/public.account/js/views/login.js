@@ -17,10 +17,12 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
+      if( ga != undefined ) ga('send', 'event', 'userdashboard','login', 'succes', 1);
 			if (status == 'success') window.location.href = '/home';
 		},
 		error : function(e){
-            lv.showLoginError('Login Failure', 'Please check your username and/or password');
+        if( ga != undefined ) ga('send', 'event', 'userdashboard', 'login', 'fail', 1);
+        lv.showLoginError('Login Failure', 'Please check your username and/or password');
 		}
 	}); 
 	$('#user-tf').focus();

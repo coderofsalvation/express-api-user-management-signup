@@ -9,12 +9,17 @@ $(document).ready(function(){
 			return av.validateForm();
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') $('.modal-alert').modal('show');
+			if (status == 'success'){
+        $('.modal-alert').modal('show');
+        if( ga != undefined ) ga('send', 'event', 'userdashboard','signup', 'succes', 1);
+      }
 		},
 		error : function(e){
 			if (e.responseText == 'email-taken'){
+          if( ga != undefined ) ga('send', 'event', 'userdashboard','signup', 'email_taken', 1);
 			    av.showInvalidEmail();
 			}	else if (e.responseText == 'username-taken'){
+          if( ga != undefined ) ga('send', 'event', 'userdashboard','signup', 'invalid_username', 1);
 			    av.showInvalidUserName();
 			}
 		}

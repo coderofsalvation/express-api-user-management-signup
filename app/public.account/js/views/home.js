@@ -15,12 +15,17 @@ $(document).ready(function(){
 			}
 		},
 		success	: function(responseText, status, xhr, $form){
-			if (status == 'success') hc.onUpdateSuccess();
+			if (status == 'success'){
+        hc.onUpdateSuccess();
+        if( ga != undefined ) ga('send', 'event', 'userdashboard','signup', 'succes', 1);
+      }
 		},
 		error : function(e){
 			if (e.responseText == 'email-taken'){
 			    av.showInvalidEmail();
+          if( ga != undefined ) ga('send', 'event', 'userdashboard','signup','email_taken', 1);
 			}	else if (e.responseText == 'username-taken'){
+          if( ga != undefined ) ga('send', 'event', 'userdashboard','signup','invalid_username', 1);
 			    av.showInvalidUserName();
 			}
 		}
