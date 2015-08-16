@@ -31,7 +31,7 @@ Middleware for quickly building login systems on top of apis/express apps. This 
     express = require('express');
     http = require('http');
     require("coffee-script/register");
-    usermanagement = require('./index.coffee');
+    usermanagement = require('express-api-user-management-signup');
   
     app = express();
     port = process.env.PORT || 3010;
