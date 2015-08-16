@@ -1,7 +1,7 @@
 express-api-user-management-signup
 ==================================
 
-Boilerplate for quickly building login systems on top of apis. This module adds a user facade-backend with login / registration on top of that. Good startingpoint for DIY api management, processable thru webhooks.
+Middleware for quickly building login systems on top of apis/express apps. This module adds a user facade-backend with login / registration on top of that. Good startingpoint for DIY api management, processable thru webhooks.
 
 <img src=".res/login.png">
 <br><br>
@@ -11,55 +11,78 @@ Boilerplate for quickly building login systems on top of apis. This module adds 
 
 ## WARNING: BETA, not production ready
 
-## Install: standalone
+## Installation 
 
-    sudo npm install coffee-script -g
     npm install express-api-user-management-signup
-    WEBHOOKURL="http://localhost:8123" node app.js 
-    # or 
-    WEBHOOKURL="http://localhost:8123" coffee app.coffee
 
-## Install: as library 
+## Usage 
 
-Use it directly in your existing express servercode:
-
-    cd my-express-server-root
-    npm install express-api-user-management-signup
-    npm install jade mongodb stylus moment emailjs coffee-script
-
-In your existing express-app, just put this above app.listen(....) :
-
-    require("./usermanagement.js")(app,express);
-
-where usermanagement.js looks something like this:
-
-    var config = {
+    var app, cfg, express, http, port, usermanagement, webhookhost, webhookport;
+  
+    express = require('express');
+    http = require('http');
+    require("coffee-script/register");
+    usermanagement = require('./index.coffee');
+  
+    app = express();
+    port = process.env.PORT || 3010;
+    webhookport = process.env.WEBHOOK_HOST || port;
+    webhookhost = process.env.WEBHOOK_HOST || 'http://127.0.0.1';
+  
+    cfg = {
       webhook: {
-        url:  "http://" + host + ":" + port,
-        requestdata: { headers: { "x-some-token":"l1kj2k323"} }
+        url: 'http://' + webhookhost + ':' + webhookport,
+        requestdata: {
+          headers: {
+            'x-some-token': 'l1kj2k323'
+          }
+        }
       },
-      mongo:       { 
-        host: "localhost", 
-        port: 27017, 
-        name: "foo"
-        // user: "foo",
-        // password: "23kj4"
+      mongo: {
+        host: 'localhost',
+        port: 27017,
+        name: 'foo'
       },
-      layout:      {
-        title:       {
-          brand:     "Projectname",
-          welcome:   "Please login to your account"
+      layout: {
+        theme: __dirname + '/app/public.account',    // define your own 
+        // theme: __dirname + '/app/public.basic',   // templates
+        title: {
+          brand: 'Projectname',
+          welcome: 'Please login to your account'
         },
-        menu:        {
-          "Apidoc":  {target:"_blank",url:"/api/v1/doc"},
-          "---":     "---",
-          "Contact": {target:"_blank",url:"mailto:support@foo.com"}
+        menu: {
+          'Apidoc': {
+            target: '_blank',
+            url: '/api/v1/doc'
+          },
+          '---': '---',
+          'Contact': {
+            target: '_blank',
+            url: 'mailto:support@foo.com'
+          }
         },
-        formurl: "/js/form.json"
+        formurl: '/js/form.json'
       }
-    }
-    module.parent.require("coffee-script/register")
-    module.parent.require('express-api-user-management-signup/lib')(app,express,config)
+    };
+  
+    app.set('port', port);
+    app.use(usermanagement(app, express, cfg));
+    http.createServer(app).listen(app.get('port'), function() {
+      console.log('Express server listening on port ' + app.get('port'));
+    });
+
+## Themes 
+
+Define your own templates for easy integration with your js/css/html framework:
+
+    cp -R node_modules/express-api-user-management-signup/app/public.basic mytheme
+
+and in the config define    
+
+    ...
+      layout: {
+        theme: __dirname + '/../../mytheme'
+    ...
 
 ## Features:
 
@@ -90,7 +113,7 @@ Just have a look at :
 
 ## Webhooks
 
-The following webhooks are fired whenever 
+The following webhooks are fired whenever these things occur:
 
 * configuredhost + /add 
     when user adds account
@@ -105,7 +128,7 @@ The following webhooks are fired whenever
 * configuredhost + /reset/pass
     when user resets password
 
-Where configuredhost is defined by you ('http://mygateway.com/foo' e.g.)
+Where configuredhost is defined by you in the config ('http://mygateway.com/foo' e.g.)
 These webhooks can be reacted upon by other middle/software in order to 
  send emails or update api proxy settings e.g.
 
