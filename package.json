@@ -1,6 +1,6 @@
 {
   "name": "express-api-user-management-signup",
-  "version": "0.0.63",
+  "version": "0.0.64",
   "description": "adds user frontend with login-, registration-, and webhook- features to your (express) application. Startingpoint for DIY api management",
   "author": {
     "name": "Coder of Salvation"
@@ -14,7 +14,6 @@
   },
   "private": false,
   "dependencies": {
-    "express": "3.0.6",
     "stylus": "0.31.0",
     "jade": "0.27.7",
     "mongodb": "2.0.27",
@@ -22,7 +21,9 @@
     "emailjs": "0.3.3",
     "request": "",
     "coffee-script": "^1.9.1",
-    "body-parser": "^1.12.2"
+    "body-parser": "^1.13.3",
+    "cookie-parser": "^1.3.5",
+    "express-session": "^1.11.3"
   },
   "engines": {
     "node": "0.8.14",

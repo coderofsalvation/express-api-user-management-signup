@@ -21,7 +21,7 @@ Middleware for quickly building login systems on top of apis/express apps. This 
 ## Installation 
 
     npm install -g coffeescript 
-    npm install jade express@3.0.6
+    npm install jade express@4.13.3
     npm install express-api-user-management-signup
 
 ## Usage 
