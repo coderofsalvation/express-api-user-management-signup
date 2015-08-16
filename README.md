@@ -3,13 +3,20 @@ express-api-user-management-signup
 
 Middleware for quickly building login systems on top of apis/express apps. This module adds a user facade-backend with login / registration on top of that. Good startingpoint for DIY api management, processable thru webhooks.
 
-<img src=".res/login.png">
-<br><br>
-<img src=".res/loggedin.png">
-<br><br>
-<img src=".res/webhooks.png">
-
 ## WARNING: BETA, not production ready
+
+#### login
+<img src=".res/login.png">
+
+#### login (basic theme)
+
+<img src=".res/login.basic.png">
+
+#### logged in 
+<img src=".res/loggedin.png">
+
+#### form generation using jsonschema
+<img src=".res/webhooks.png">
 
 ## Installation 
 
