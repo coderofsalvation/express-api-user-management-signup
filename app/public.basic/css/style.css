@@ -1,0 +1,17 @@
+div#get-credentials {
+  display: none;
+}
+.expandable legend::before {
+  content: "> ";
+}
+.expandable.expanded legend::before {
+  content: "< ";
+}
+.icon-plus-sign::before {
+  content: "+";
+  text-decoration: none;
+}
+.icon-minus-sign::before {
+  content: "-";
+  text-decoration: none;
+}

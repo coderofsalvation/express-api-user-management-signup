@@ -1,0 +1,44 @@
+{
+  "form": [{ 
+    "type": "fieldset",
+    "title": "Wwwitems",
+    "expandable": true,
+    "items": [ "wwwitems" ]
+  }],
+  "schema": {
+    "wwwitems": {
+      "type": "array",
+      "description": "<br><br><div class='alert alert-info' role='alert'>Hi! Wwwitems are still in Beta. We'll email you as soon as they get activated</div>",
+      "minItems": 0,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "properties": {
+          "enabled":{
+            "type": "boolean",
+            "default": false,
+            "title": "Enabled"
+          },
+          "event": {
+            "type": "string",
+            "enum": ["item new","item update","item delete"],
+            "title": "When",
+            "required": true
+          },
+          "url": {
+            "type": "string",
+            "title": "call url",
+            "default": "http://yourapp.com/foo",
+            "required": true
+          },
+          "method": {
+            "type": "string",
+            "enum": ["get","post","put","delete"],
+            "title": "using",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}

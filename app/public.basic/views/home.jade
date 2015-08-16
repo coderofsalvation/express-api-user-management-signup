@@ -1,0 +1,39 @@
+
+extends layout
+
+block content
+  div.navbar.navbar-fixed-top
+    div.navbar-inner
+      div.container-fluid
+        ul#global-nav.nav.pull-left
+          a(href='#').brand #{brand}
+          ul.nav.navbar-nav
+            li#menu.dropdown
+              a.dropdown-toggle(href='#menu', data-toggle='dropdown')
+                | Menu 
+                span.caret
+              ul.dropdown-menu(role='menu')
+                each val, index in menu
+                  li
+                    - if ( index == "---" ){
+                      li.divider
+                    - } else {
+                      a(href=val.url,target=val.target)= index 
+                    - }
+        button#btn-logout.btn.btn-primary
+          i.icon-lock.icon-white
+          | Sign Out
+
+  include account
+
+block append scripts
+  script(src='/vendor/jquery.min.js')
+  script(src='/vendor/jquery.form.js')
+
+  script(src='/vendor/jsv.js')
+  script(src='/vendor/underscore.js')
+  script(src='/vendor/jsonform.js')
+
+  script(src='/js/views/home.js')
+  script(src='/js/controllers/homeController.js')
+  script(src='/js/form-validators/accountValidator.js')

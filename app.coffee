@@ -25,8 +25,8 @@ cfg=
     port: 27017
     name: 'foo'
   layout:
-    #theme: __dirname + '/app/public.account' # copy this dir to customize your own theme
-    theme: __dirname + '/app/public.basic'    # copy this dir to customize your own theme
+    #theme: __dirname + '/app/public.basic'  # copy this dir to customize your own theme
+    theme: __dirname + '/app/public.account' 
     title:
       brand: 'Projectname'
       welcome: 'Please login to your account'

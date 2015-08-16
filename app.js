@@ -41,7 +41,7 @@
       name: 'foo'
     },
     layout: {
-      theme: __dirname + '/app/public.basic',
+      theme: __dirname + '/app/public.account',
       title: {
         brand: 'Projectname',
         welcome: 'Please login to your account'

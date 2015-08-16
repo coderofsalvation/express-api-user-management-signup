@@ -1,0 +1,40 @@
+
+extends layout
+
+block content
+  #login-container
+    form( method="post")#login-form.well.span4
+      h1 Hello!
+      p.subheading #{title}
+      label Username 
+      input(type="text", name="user", id='user-tf').span4.required
+      label Password
+      input(type="password", name="pass", id='pass-tf').span4.required
+      button(type="submit")#btn-login.btn.btn-primary
+        i.icon-lock.icon-white
+        | Sign in
+      label#remember-me.checkbox Remember Me
+        input(type="checkbox", checked='checked')
+      div.clear-fix
+      hr
+      div.btm-links
+        a(href='#')#forgot-password Forgot Your Password?
+        a(href='/signup')#create-account Create An Account
+
+  div#get-credentials 
+    h3 Retrieve Password
+    form( method="post")#get-credentials-form.well.span5
+      p Please enter the email address associated with your account
+      input(type="text", name="email", id='email-tf').span5.required
+      button(type="submit")#submit.btn.btn-primary Submit
+      button(data-dismiss="modal")#cancel.btn Cancel
+      div.alert.alert-error.hide
+      button(data-dismiss="alert").close
+
+block append scripts
+  script(src='/vendor/jquery.min.js')
+  script(src='/vendor/jquery.form.js')
+  script(src='/js/views/login.js')
+  script(src='/js/controllers/loginController.js')
+  script(src='/js/form-validators/loginValidator.js')
+  script(src='/js/form-validators/emailValidator.js')
