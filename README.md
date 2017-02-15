@@ -1,6 +1,8 @@
 express-api-user-management-signup
 ==================================
 
+*DEPRECATED* by [expressa](https://www.npmjs.com/package/expressa)
+
 Middleware for quickly building login systems on top of apis/express apps. This module adds a user facade-backend with login / registration on top of that. Good startingpoint for DIY api management, processable thru webhooks, themable using custom js/css/jade templates.
 
 ## WARNING: BETA, not production ready

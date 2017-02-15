@@ -1,6 +1,6 @@
 {
   "name": "express-api-user-management-signup",
-  "version": "0.0.64",
+  "version": "0.0.65",
   "description": "adds user frontend with login-, registration-, and webhook- features to your (express) application. Startingpoint for DIY api management",
   "author": {
     "name": "Coder of Salvation"
